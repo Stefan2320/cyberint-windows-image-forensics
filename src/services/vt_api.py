@@ -22,9 +22,13 @@ class VTapi(API):
         '''
         TODO check what happens when there is no hash found?
         '''
-        file = self.client_api.get_object(hash)
+        try:
+            file = self.client_api.get_object("/files/"+hash)
+            print(file)
+        except Exception:
+            return None
         return file
         
-           
+   
     
     
