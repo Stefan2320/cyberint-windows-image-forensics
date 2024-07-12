@@ -1,14 +1,18 @@
-## Goals of project
+## Goal of the project
 
-1. Analyze virtual Windows images in FTK
-    - I want to read about methods to infect Windows machines
+This project is meant to get a Windows image as an input, mount it and then perform a basic static analysis.
+The state analysis should include the following: 
+- extract data about the Windows machine using Windowo Registry
+- parse all the files from the image and calculate the hash for each file
+- check each hash value with Virustotal 
+- if a hash is found to be malicious then investigate persistence 
+- store everything in a relational database 
 
-# FTK Imager
+## FTK Imager
 
 FTK Imager is a forensics tool which we will use to extract data from Windows images, to do this I first infected a Windows machine with malware (downloaded from [vx-undergound](https://vx-underground.org/)) and then I added the machine in FTK Imager through the vmdks. ( which we will convert to an E01 (Expert Witness disk image or Encase image file) are used to store digital evidence like disk images.   WORKS OK WITHOUT THIS)
 
-### To use this mount the vmdk
-
+#
 To mount the image I used FTK and made a python script that automates this (this has a lot to improve). 
 
 # Windows Registry
@@ -36,9 +40,11 @@ These are important locations that we'll need to extract from FTK imager.
 
 To access the Windows Registry keys we will be using the winreg library.
 
+# Persistance checking
+
 # Database
 
-Since this was a small project which didn't need a complet database, I decided to use a relational database more exactly with SQLite. A couple of reasons why I chose SQLite:
+Since this was a small project which didn't need a complet database, I decided to use a relational database (SQLite). A couple of reasons why I chose SQLite:
 - Simplicty 
 - ACID (Atomicity, Consistency, Isolation, Durability) 
 - Efficient with simple queries
