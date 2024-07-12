@@ -36,6 +36,12 @@ These are important locations that we'll need to extract from FTK imager.
 
 To access the Windows Registry keys we will be using the winreg library.
 
+# Database
+
+Since this was a small project which didn't need a complet database, I decided to use a relational database more exactly with SQLite. A couple of reasons why I chose SQLite:
+- Simplicty 
+- ACID (Atomicity, Consistency, Isolation, Durability) 
+- Efficient with simple queries
 
 # Future ideas
 
