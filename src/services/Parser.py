@@ -8,9 +8,17 @@ TODO threading for recursion
 class FilesParser:
     def __init__(self, drives: list[str], hasher: Hasher) -> None:
         self.drives = drives
-        self.hasher = hasher
-        # temporary
-        self.hashes = [] 
+        self.hasher : list[Hasher] = [hasher]
+        # hashes will store at one position the path of the file and a dictionary with all the hashes
+        self.hashes : list[dict[str:str]]= [] 
+        
+    def calculate_hash_helper(self, file: str): 
+        all_hashes_file = {}
+        for hash_type in self.hasher:
+                hash = hash_type.compute_hash(file)
+                all_hashes_file[hash_type.get_hash_type()] = hash
+        return all_hashes_file 
+
     def recursive_parser(self, dir: str): 
         '''
         When saving to a db maybe use a DBhandler that will be given in the constructor
@@ -19,8 +27,9 @@ class FilesParser:
         files = [f for f in all_files if os.path.isfile(os.path.join(dir,f))]
         dirs = [d for d in all_files if os.path.isdir(os.path.join(dir,d))]
         for file in files:
-            hash = self.hasher.compute_hash(os.path.join(dir,file))
-            self.hashes.append(hash)
+            file_path = os.path.join(dir,file)
+            all_hashes = self.calculate_hash_helper(file_path)
+            self.hashes.append({'path':file,'hashes':all_hashes})
         for d in dirs:
             self.recursive_parser(os.path.join(dir,d))
 
@@ -28,5 +37,6 @@ class FilesParser:
         for drive in self.drives:
             self.recursive_parser(drive)
                     
-            
+    def add_hasher(self, new_hasher: Hasher):
+        self.hasher.append(new_hasher) 
          
