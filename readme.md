@@ -42,6 +42,8 @@ To access the Windows Registry keys we will be using the winreg library.
 
 # Persistance checking
 
+1. use Sysinternals Autoruns 
+
 # Database
 
 Since this was a small project which didn't need a complet database, I decided to use a relational database (SQLite). A couple of reasons why I chose SQLite:
@@ -54,4 +56,4 @@ Since this was a small project which didn't need a complet database, I decided t
 This project could be extended with the following features:
     - Find a way to read the filesystem easier (mayber dockerize FTKImager)
     - Make an interface which will allow future implementations for opening other types of images!
-    
+     
