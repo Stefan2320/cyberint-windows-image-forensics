@@ -20,14 +20,24 @@ class VTapi(API):
     
     def get_file(self, hash)->vt.Object:
         '''
-        TODO check what happens when there is no hash found?
+        Possible issue being the limitations of number of requests
         '''
         try:
             file = self.client_api.get_object("/files/"+hash)
             print(file)
         except Exception:
-            return None
+           return None
         return file
+
+    def close_connection(self):
+        self._client_api.close()
+
+    def open_connection(self, api_key = None):
+        if api_key:
+            self._client_api =  vt.Client(api_key) 
+        else:
+            self._client_api = vt.Client(self._api_key)
+        
         
    
     
