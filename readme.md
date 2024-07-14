@@ -42,7 +42,18 @@ To access the Windows Registry keys we will be using the winreg library.
 
 # Persistance checking
 
-1. use Sysinternals Autoruns 
+Persistence on a Windows system is commonly established using registry run keys and the startup folder.
+Therefore, we will check the following:
+
+- If the file path exists in the **Windows startup** folder. There are two locations to check:   
+    1. C:\Users\USERNAME\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup (user-specific) 
+    2. C:\ProgramData\Microsoft\Windows\Start Menu\Programs\StartUp (system-wide)
+
+-   The **registry Runs keys** which causes a command to run when a user logs on. There is also the RunOnce registry key that is used to clear the associated entry from the registry as soon as the command is run. To do this the following registries needs to be checked:
+    1. HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Run
+    2. HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\Run
+    3. HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\RunOnce
+    4. HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\RunOnce
 
 # Database
 
