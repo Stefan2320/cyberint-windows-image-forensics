@@ -1,8 +1,12 @@
 class File:
-    def __init__(self, hashes: dict = {}, path: str = None, is_malicious: bool = None):
+    def __init__(self, hashes: dict = {}, path: str = None, is_malicious: bool = None, name: str = None):
+        self.name = name
         self.path = path
         self.hashes = hashes
         self.is_malicious = is_malicious
+
+    def set_name(self, name: str):
+        self.name = name
 
     def set_path(self, path: str):
         self.path = path

@@ -29,7 +29,7 @@ class FilesParser:
         for file in files:
             file_path = os.path.join(dir,file)
             all_hashes = self.calculate_hash_helper(file_path)
-            self.hashes.append({'path':file,'hashes':all_hashes})
+            self.hashes.append({'path':file_path,'name':file,'hashes':all_hashes})
         for d in dirs:
             self.recursive_parser(os.path.join(dir,d))
 
