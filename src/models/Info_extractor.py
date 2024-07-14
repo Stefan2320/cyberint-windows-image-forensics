@@ -43,6 +43,9 @@ class HostExtractor(Extractor):
     '''
     '''
     def extract(self, location: str):
+        '''
+        TODO who is location??
+        '''
         self.hosts = []
         reg = Registry.Registry(f"{location}/Windows/System32/config/SYSTEM")
         keys = self.rec(reg.root(),self.keyword)
