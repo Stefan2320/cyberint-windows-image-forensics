@@ -5,7 +5,7 @@ from .Info_extractor import (UserExtractor,
                                        GUIDExtractor
                                        )
                                        
-
+#TODO read the values from the registry keys
 class ImageInfo:
     def __init__(self, user_extractor: UserExtractor, host_extractor: HostExtractor, ip_extractor: IPExtractor, guid_extractor: GUIDExtractor):
         self.user_extractor = user_extractor
