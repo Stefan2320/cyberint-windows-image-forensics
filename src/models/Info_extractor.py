@@ -50,7 +50,10 @@ class UserExtractor(Extractor):
                                 v.value_type() == Registry.RegExpandSZ]:
                 self.users.append({value.name():[value.value(), str(key)[:-28]]})
         return self.users
-
+    
+    def set_reg_key(self,key: str):
+        self.reg_key = key
+        
 class HostExtractor(Extractor):
     '''
     '''
@@ -68,6 +71,9 @@ class HostExtractor(Extractor):
                                 v.value_type() == Registry.RegExpandSZ]:
                 self.hosts.append({value.name():[value.value(), str(key)[:-28]]})
         return self.hosts
+    
+    def set_reg_key(self,key: str):
+        self.reg_key = key
 
 class IPExtractor(Extractor):
     def extract(self, location: str):
@@ -83,6 +89,9 @@ class IPExtractor(Extractor):
                                 v.value_type() == Registry.RegExpandSZ]:
                 self.ip.append({value.name():[value.value(), str(key)[:-28]]})
         return self.ip
+    
+    def set_reg_key(self,key: str):
+        self.reg_key = key
 
 class GUIDExtractor(Extractor):
     def extract(self, location: str):
@@ -95,3 +104,6 @@ class GUIDExtractor(Extractor):
                 return {value.name(): [value.value(),str(key)[:-28]]}
                 break
         return None 
+    
+    def set_reg_key(self,key: str):
+        self.reg_key = key
