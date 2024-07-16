@@ -1,8 +1,9 @@
 from Registry import Registry
 from .Info_extractor import (UserExtractor,
-                                       HostExtractor,
-                                       IPExtractor,
-                                       GUIDExtractor
+                            HostExtractor,
+                            IPExtractor,
+                            GUIDExtractor,
+                            GeneralExtractor
                                        )
                                        
 #TODO read the values from the registry keys
@@ -21,8 +22,20 @@ class ImageInfo:
         self.location = location
 
     def extract_users(self):
+        '''
+        TODO filter if S-1-5-18 etc are relevant or not + check info
+        store res in a set
+        '''
         self.users = self.user_extractor.extract(self.location)
-
+        for registry in self.users:
+            if 'ProfileImagePath' in registry.keys():
+                SID = registry['ProfileImagePath'][1]
+                SID = SID[SID.find('\\CurrentVersion'):-1]
+                self.user_extractor.set_reg_key(SID)
+                for reg_users in self.user_extractor.extract(self.location):
+                    if any('Users' in path for path in reg_users['ProfileImagePath']):
+                        print(reg_users)
+            
     def extract_hosts(self):
         self.hosts = self.host_extractor.extract(self.location)
 
