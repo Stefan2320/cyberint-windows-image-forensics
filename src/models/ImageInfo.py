@@ -33,7 +33,9 @@ class ImageInfo:
                 self.user_extractor.set_reg_key(SID)
                 for reg_users in self.user_extractor.extract(self.location):
                     if any('Users' in path for path in reg_users['ProfileImagePath']):
-                        self.users.add(reg_users['ProfileImagePath'][0])
+                        user_path = reg_users['ProfileImagePath'][0][reg_users['ProfileImagePath'][0].rfind('\\'):].replace('\\','')
+                        self.users.add(user_path)
+        print(self.users)
             
     def extract_hosts(self):
         hosts = self.host_extractor.extract(self.location)
