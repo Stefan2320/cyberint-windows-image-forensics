@@ -21,13 +21,9 @@ class PersistenceCheckerRegistry(Extractor):
                 self.hosts.append({value.name():[value.value(), str(key)[:-28]]})
         return self.hosts
 
-    # TODO maybe refactor here everything, create an extractor and use it here
     def extract_run_key(self, location: str):
         return self.extract(location, self.reg_keys[0], r"/Windows/System32/config/SOFTWARE")
 
     def extract_runOnce_key(self, location: str):
         self.extract(location, self.reg_keys[1],r"/Windows/System32/config/SOFTWARE")
-
-    def add_registry_keys(self, new_reg_key):
-        self.reg_keys.append(new_reg_key)
         
