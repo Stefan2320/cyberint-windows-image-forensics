@@ -24,7 +24,6 @@ class VTapi(API):
         '''
         try:
             file = self.client_api.get_object("/files/"+hash)
-            print(file)
         except Exception:
            return None
         return file
