@@ -16,8 +16,6 @@ from src.services.vt_api import VTapi
 from src.exceptions import exceptions 
 from src.models.Files import File
 from src.repository.init import create_database
-from src.repository.FileRepo import FileRepository
-from src.services.Persistance import FileService
 from src.services.RegistryPersistance import PersistenceCheckerRegistry
 from src.services.FilePersitance import FilePersistance
 from src.services.ReposirotyManager import RepositoryManager
@@ -93,6 +91,7 @@ class SystemManager:
                 self.repo_manager.get_file_hash_repo().add_hash(file_repo.file_id,'SHA1',file.hashes.get('SHA1'))
             except Exception as e:
                 print(f"Error processing file {name}: {e}")
+        self.vt_api.close_connection()
 
     def check_persistence(self):
         checker_registry = PersistenceCheckerRegistry()
