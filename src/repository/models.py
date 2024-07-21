@@ -1,6 +1,10 @@
 from sqlalchemy import Column, Integer, String, Boolean, ForeignKey
 from sqlalchemy.orm import relationship
 from .init import Base
+'''
+
+TODO move to models
+'''
 
 class FileModel(Base):
     '''
@@ -24,6 +28,10 @@ class WindowsImage(Base):
 
     files = relationship('ImageFile', back_populates='windows_image')
     hosts = relationship('ImageHost', back_populates='windows_image')
+    ips = relationship('ImageIP', back_populates='windows_image')
+    users = relationship('ImageUser', back_populates='windows_image')
+    guids = relationship('ImageGUID', back_populates='windows_image')
+    persistances = relationship('ImagePersistance', back_populates='windows_image')
 
 class ImageFile(Base):
     __tablename__ = 'image_files'
@@ -31,6 +39,7 @@ class ImageFile(Base):
     file_id = Column(Integer, primary_key=True, autoincrement=True)
     image_id = Column(Integer, ForeignKey('windows_image.image_id'), nullable=False)
     path = Column(String, nullable=False)
+    is_malicious = Column(Boolean, nullable=True)
 
     # Relationships
     windows_image = relationship('WindowsImage', back_populates='files')
@@ -54,3 +63,47 @@ class ImageHost(Base):
     host_name = Column(String, nullable=False)
 
     windows_image = relationship('WindowsImage', back_populates='hosts')
+
+class ImageIP(Base):
+    __tablename__ = 'image_ips'
+
+    ip_id = Column(Integer, primary_key=True, autoincrement=True)
+    image_id = Column(Integer, ForeignKey('windows_image.image_id'), nullable=False)
+    interface = Column(String, nullable=False)
+    DhcpIPAddress = Column(String, nullable=True)
+    DhcpServer = Column(String, nullable=True)
+    DhcpNameServer = Column(String, nullable=True)
+    IPAddress = Column(String, nullable=True)
+
+    windows_image = relationship('WindowsImage', back_populates='ips')
+
+class ImageUser(Base):
+    __tablename__ = 'image_users'
+
+    user_id = Column(Integer, primary_key=True, autoincrement=True)
+    image_id = Column(Integer, ForeignKey('windows_image.image_id'), nullable=False)
+    user_value = Column(String, nullable=False)
+
+    windows_image = relationship('WindowsImage', back_populates='users')
+
+class ImageGUID(Base):
+    __tablename__ = 'image_guids'
+
+    guid_id = Column(Integer, primary_key=True, autoincrement=True)
+    image_id = Column(Integer, ForeignKey('windows_image.image_id'), nullable=False)
+    guid_value = Column(String, nullable=False)
+
+    windows_image = relationship('WindowsImage', back_populates='guids')
+
+    
+class ImagePersistance(Base):
+    __tablename__ = 'image_persistance'
+
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    image_id = Column(Integer, ForeignKey('windows_image.image_id'), nullable=False)
+    name = Column(String, nullable=True)
+    path = Column(String, nullable=False)
+    persistance_type = Column(String, nullable=False)
+ 
+    
+    windows_image = relationship('WindowsImage', back_populates='persistances')
