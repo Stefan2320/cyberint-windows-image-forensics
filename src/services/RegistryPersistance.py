@@ -22,8 +22,23 @@ class PersistenceCheckerRegistry(Extractor):
         return self.hosts
 
     def extract_run_key(self, location: str):
-        return self.extract(location, self.reg_keys[0], r"/Windows/System32/config/SOFTWARE")
+        registry_result = self.extract(location, self.reg_keys[0], r"/Windows/System32/config/SOFTWARE")
+        persistance_files = []
+        for reg_item in registry_result:
+            keys = reg_item.keys()
+            for name in keys:
+                file_path = reg_item[name][0]
+                persistance_files.append({name,file_path})      
+        return persistance_files
+      
 
     def extract_runOnce_key(self, location: str):
-        self.extract(location, self.reg_keys[1],r"/Windows/System32/config/SOFTWARE")
+        registry_result = self.extract(location, self.reg_keys[1],r"/Windows/System32/config/SOFTWARE")
+        persistance_files = []
+        for reg_item in registry_result:
+            keys = reg_item.keys()
+            for name in keys:
+                file_path = reg_item[name][0]
+                persistance_files.append({name,file_path})      
         
+        return persistance_files 
