@@ -5,16 +5,16 @@ from .Info_extractor import (UserExtractor,
                             GUIDExtractor
                                        )
                                        
-#TODO read the values from the registry keys
 class ImageInfo:
-    def __init__(self, user_extractor: UserExtractor, host_extractor: HostExtractor, ip_extractor: IPExtractor, guid_extractor: GUIDExtractor):
+    # add how to saved data looks like
+    def __init__(self, user_extractor: UserExtractor = None, host_extractor: HostExtractor = None, ip_extractor: IPExtractor = None, guid_extractor: GUIDExtractor = None):
         self.user_extractor = user_extractor
         self.host_extractor = host_extractor
         self.ip_extractor = ip_extractor
         self.guid_extractor = guid_extractor
         self.users =  set()
         self.hosts = set() 
-        self.ip : dict[str, list] = {} # set wansn't suitable 
+        self.ip : dict[str, list] = {} 
         self.GUID = None
 
     def set_location(self, location: str):
@@ -33,9 +33,8 @@ class ImageInfo:
                 self.user_extractor.set_reg_key(SID)
                 for reg_users in self.user_extractor.extract(self.location):
                     if any('Users' in path for path in reg_users['ProfileImagePath']):
-                        user_path = reg_users['ProfileImagePath'][0][reg_users['ProfileImagePath'][0].rfind('\\'):].replace('\\','')
-                        self.users.add(user_path)
-        print(self.users)
+                        username = reg_users['ProfileImagePath'][0][reg_users['ProfileImagePath'][0].rfind('\\'):].replace('\\','')
+                        self.users.add(username)
             
     def extract_hosts(self):
         hosts = self.host_extractor.extract(self.location)
@@ -57,11 +56,8 @@ class ImageInfo:
                         if key in important_keys:
                             properties.append({key,ip_sub_keys[key][0]})
                 self.ip[domain[domain.rfind('{'):]] = properties
-                
 
     def extract_GUID(self):
         GUID = self.guid_extractor.extract(self.location)
         if GUID.get('MachineGuid'):
             self.GUID = GUID['MachineGuid'][0]  
-    
-        print(self.GUID)

@@ -55,8 +55,6 @@ class UserExtractor(Extractor):
         self.reg_key = key
         
 class HostExtractor(Extractor):
-    '''
-    '''
     def extract(self, location: str):
         '''
         TODO who is location??
