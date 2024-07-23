@@ -24,9 +24,6 @@ class FileProcessor:
         self.parser = FilesParser(self.system_details.drives, md5hasher)
         self.parser.add_hasher(sha1hasher)
 
-        self.parser = FilesParser(["E://"], md5hasher)
-        self.parser.add_hasher(sha1hasher)
-
     def parse_files_and_hash(self) -> None:
         """
         Parses files and calculates their hashes.
