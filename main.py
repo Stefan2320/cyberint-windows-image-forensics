@@ -1,45 +1,26 @@
-from src.models.ImageInfo import ImageInfo
-from src.models.SystemDetails import SystemDetails
-from src.services.Hashing import MD5Hasher
-from src.services.Parser import FilesParser
-from src.models.Info_extractor import (HostExtractor,
-                                       UserExtractor,
-                                       IPExtractor,
-                                       GUIDExtractor)
-from src.config import get_api_key
-from src.services.vt_api import VTapi
-from src.exceptions import exceptions 
 
-# system_details = SystemDetails()
-# system_details.initialize()
+from src.services.repository_manager import RepositoryManager
+from src.services.system_manger import SystemManager
+from src.utils.FTImager_script import mount,unmount_images
 
-# host_extractor = HostExtractor("ComputerName")
-# user_extractor = UserExtractor("ProfileList")
-# ip_extractor = IPExtractor("TCPIP")
-# guid_extractor = GUIDExtractor("MachineGuid")
-
-# image_details = ImageInfo(user_extractor, host_extractor, ip_extractor, guid_extractor)
-# image_details.set_location(system_details.C_drive)
-
-# image_details.extract_GUID()
-# image_details.extract_ip()
-# image_details.extract_hosts()
-# image_details.extract_users()
-
-# print(image_details.GUID)
-# print(image_details.ip)
-# print(image_details.hosts)
-# print(image_details.users)
-
-# md5hasher = MD5Hasher()
-# parser = FilesParser(system_details.drives, md5hasher)
-# parser.parse_drives()
-
-api_key = get_api_key()
-if api_key is None:
-    raise exceptions.APIKeyVTError()
-
-vt_api = VTapi(api_key)
-
-
-
+user_input = mount()
+database_manager = RepositoryManager()
+database_manager.initialize()
+print("[+] Database initialized")
+manager = SystemManager(database_manager)
+manager.initialize_system()
+print("[+] Manage initialized")
+manager.extract_image_info()
+print("[+] Extracted information about image")
+manager.setup_parser()
+print("[+] Created file parser")
+manager.parse_files_and_hash()
+print("[+] Parsed and computed hash")
+manager.connect_to_vt()
+print("[+] Conntected to vt api")
+manager.process_files_and_store_in_db()
+print("[+] Stored file and hash in database")
+manager.check_persistence()
+print("[+] Files that have persistence were added")
+if user_input.lower() == "y":
+    unmount_images()
