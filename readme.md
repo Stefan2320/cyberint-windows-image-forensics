@@ -112,15 +112,14 @@ Since this was a small project which didn't need a complex database, I decided t
 ### Tables
 
 #### WindowsImage
-Stores each Windows image file that will be analyzed. 
-
+Stores each Windows image file to be analyzed. The name of each file needs to be entered manually.
 | Field        | Type         | Description                            |
 |--------------|--------------|----------------------------------------|
 | `image_id`   | Primary Key   | Unique identifier for each image.      |
 | `image_name` | String       | Name of the Windows image.             |
 
 #### ImageFile
-Stores each file path  from the analyzed Windows image and if the file is malicious.
+Stores each file path from the analyzed Windows image and if the file is malicious.
 
 | Field        | Type         | Description                            |
 |--------------|--------------|----------------------------------------|
