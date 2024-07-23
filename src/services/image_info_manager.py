@@ -28,7 +28,8 @@ class ImageInfoManager:
         Initializes the image and adds it to the repository.
         """
         self.system_details.initialize()
-        windows_image = self.repo_manager.get_windows_image_repo().add_image("Test")
+        image_name = input("Enter image name: ")
+        windows_image = self.repo_manager.get_windows_image_repo().add_image(image_name)
         self.image_id = windows_image.image_id
 
     def extract_and_store_image_info(self) -> None:
