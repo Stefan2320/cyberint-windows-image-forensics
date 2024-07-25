@@ -90,7 +90,7 @@ For the users the `SOFTWARE` hive is used with the key:`ProfileList`.
 More information about the registry values for the users can be found [here](https://learn.microsoft.com/en-us/windows-server/identity/ad-ds/manage/understand-security-identifiers). 
 
 
-## Persistance checking
+## Persistence checking
 
 Persistence on a Windows system is commonly established using registry run keys and the startup folder.
 Therefore, we will check the following:
